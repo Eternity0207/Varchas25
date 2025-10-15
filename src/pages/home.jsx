@@ -57,15 +57,17 @@ function Home() {
     }
 
     function computeScrollPercent() {
-      const docH = document.documentElement.scrollHeight - window.innerHeight
+      const el = document.scrollingElement || document.documentElement
+      const docH = el.scrollHeight - el.clientHeight
       if (docH <= 0) return 0
-      return Math.max(0, Math.min(1, window.scrollY / docH))
+      return Math.max(0, Math.min(1, el.scrollTop / docH))
     }
 
     function loop() {
       smooth += (scrollTarget - smooth) * easing
-      const index = Math.floor(smooth * (frameCount - 1))
-      let img = images[index] || images.find(Boolean)
+      const index = Math.max(0, Math.min(frameCount - 1, Math.floor(smooth * (frameCount - 1))))
+      if (debugEl) debugEl.textContent = `debug: pct=${(smooth).toFixed(3)} index=${index}`
+      const img = images[index] || images.find(Boolean)
       if (img) drawImageToCover(img)
       rafId = requestAnimationFrame(loop)
     }
@@ -94,6 +96,7 @@ function Home() {
     preloadAll()
     rafId = requestAnimationFrame(loop)
     window.addEventListener('scroll', onScroll)
+        onScroll() // initialize based on current scroll position
     window.addEventListener('resize', onResize)
 
     return () => {

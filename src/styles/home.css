@@ -12,6 +12,11 @@ html, body {
   width: 100%;
 }
 
+body { display: block !important; min-height: auto !important; place-items: initial !important; overflow-y: auto; }
+
+/* Neutralize Vite template container constraints to allow full-width sections */
+#root { max-width: none; margin: 0; padding: 0; width: 100%; }
+
 #canvas {
   position: fixed;
   inset: 0;

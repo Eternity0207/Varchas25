@@ -1,0 +1,89 @@
+:root {
+  --bg: #000;
+}
+
+html, body {
+  height: auto;
+  margin: 0;
+  background: var(--bg);
+  overflow-x: hidden;
+  font-family: system-ui, Segoe UI, Roboto;
+  display: block;
+  width: 100%;
+}
+
+#canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 1;
+  background: #000;
+}
+
+#loader {
+  position: fixed;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  z-index: 3;
+  color: #fff;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#loader .bar {
+  width: 160px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#loader .bar > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #D4AF37, #b78f28);
+  border-radius: 4px;
+  transition: width .2s linear;
+}
+
+#debug {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 4;
+  color: #ddd;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.content-block {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.407);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content-block h1 {
+  font-size: 3rem;
+  color: #D4AF37;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+

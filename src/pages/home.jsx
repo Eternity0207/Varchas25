@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import './home.css'
+import '../styles/home.css'
 
 function Home() {
   const canvasRef = useRef(null)

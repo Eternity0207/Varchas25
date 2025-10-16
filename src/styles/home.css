@@ -2,7 +2,8 @@
   --bg: #000;
 }
 
-html, body {
+html,
+body {
   height: auto;
   margin: 0;
   background: var(--bg);
@@ -12,10 +13,19 @@ html, body {
   width: 100%;
 }
 
-body { display: block !important; min-height: auto !important; place-items: initial !important; overflow-y: auto; }
+body {
+  display: block !important;
+  min-height: auto !important;
+  place-items: initial !important;
+  overflow-y: auto;
+}
 
-/* Neutralize Vite template container constraints to allow full-width sections */
-#root { max-width: none; margin: 0; padding: 0; width: 100%; }
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
 #canvas {
   position: fixed;
@@ -55,9 +65,9 @@ body { display: block !important; min-height: auto !important; place-items: init
   display: block;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #D4AF37, #b78f28);
+  background: linear-gradient(90deg, #d4af37, #b78f28);
   border-radius: 4px;
-  transition: width .2s linear;
+  transition: width 0.2s linear;
 }
 
 #debug {
@@ -82,13 +92,12 @@ body { display: block !important; min-height: auto !important; place-items: init
   color: #fff;
   position: relative;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.407);
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .content-block h1 {
   font-size: 3rem;
-  color: #D4AF37;
+  color: #d4af37;
   text-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
 }
-

@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Loader from "../components/loader";
+import useSessionStorage from "../../hooks/useSessionStorage";
 import "../styles/home.css";
 
 function Home() {
-  const [showCanvas, setShowCanvas] = useState(false);
+  const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
+  const [showCanvas, setShowCanvas] = useState(hasLoaded);
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
@@ -123,13 +125,21 @@ function Home() {
       images = [];
     };
   }, [showCanvas]);
+  useEffect(() => {
+    if (!hasLoaded && !showCanvas) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [hasLoaded, showCanvas]);
 
   return (
     <>
-      {!showCanvas && (
+      {!hasLoaded && !showCanvas && (
         <Loader
           onComplete={() => {
             setShowCanvas(true);
+            setHasLoaded(true);
           }}
         />
       )}

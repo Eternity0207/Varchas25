@@ -40,7 +40,7 @@ const Loader = ({ onComplete }) => {
 
     const timer = setTimeout(() => {
       fadeOutLoader();
-    }, 5000);
+    }, 5100);
 
     return () => {
       clearTimeout(timer);
@@ -53,8 +53,9 @@ const Loader = ({ onComplete }) => {
   const fadeOutLoader = () => {
     const loaderEl = document.getElementById("particle-slider");
     if (loaderEl) {
-      loaderEl.style.transition = "opacity 1s ease";
+      loaderEl.style.transition = "opacity 1s ease, transform 1s ease";
       loaderEl.style.opacity = "0";
+      loaderEl.style.transform = "translateY(-50px)";
       setTimeout(() => {
         if (onComplete) onComplete();
       }, 1000);

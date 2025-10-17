@@ -6,6 +6,7 @@ import "../styles/home.css";
 function Home() {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
+  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
@@ -14,32 +15,20 @@ function Home() {
   useEffect(() => {
     if (!showCanvas) return;
 
-    const frameCount = 583;
-    const prefix = "00";
-    const ext = ".jpg";
-    const padding = 3;
-    const framesPath = "/frames/";
     const easing = 0.09;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    const video = videoRef.current;
     const loaderText = loaderTextRef.current;
     const loaderBar = loaderBarRef.current;
     const debugEl = debugRef.current;
 
-    let images = new Array(frameCount);
-    let loadedCount = 0;
+    let videoLoaded = false;
     let scrollTarget = 0;
     let smooth = 0;
     let firstFrameDrawn = false;
     let rafId = 0;
-
-    function pad(num) {
-      return String(num).padStart(padding, "0");
-    }
-    function frameUrl(i) {
-      return framesPath + prefix + pad(i) + ext;
-    }
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -48,19 +37,20 @@ function Home() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function drawImageToCover(img) {
-      if (!img || !img.width) return;
+    function drawVideoToCover() {
+      if (!video || video.readyState < 2) return;
       const vw = canvas.clientWidth;
       const vh = canvas.clientHeight;
-      const iw = img.width;
-      const ih = img.height;
+      const iw = video.videoWidth;
+      const ih = video.videoHeight;
+      if (!iw || !ih) return;
       const scale = Math.max(vw / iw, vh / ih);
       const w = iw * scale;
       const h = ih * scale;
       const x = (vw - w) / 2;
       const y = (vh - h) / 2;
       ctx.clearRect(0, 0, vw, vh);
-      ctx.drawImage(img, x, y, w, h);
+      ctx.drawImage(video, x, y, w, h);
     }
 
     function computeScrollPercent() {
@@ -72,47 +62,55 @@ function Home() {
 
     function loop() {
       smooth += (scrollTarget - smooth) * easing;
-      const index = Math.max(
-        0,
-        Math.min(frameCount - 1, Math.floor(smooth * (frameCount - 1)))
-      );
-      const img = images[index] || images.find(Boolean);
-      if (img) drawImageToCover(img);
+      
+      if (videoLoaded && video.duration) {
+        const targetTime = smooth * video.duration;
+        video.currentTime = targetTime;
+      }
+      
+      drawVideoToCover();
       rafId = requestAnimationFrame(loop);
     }
 
-    function preloadAll() {
-      for (let i = 1; i <= frameCount; i++) {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-          images[i - 1] = img;
-          loadedCount++;
-          const pct = Math.round((loadedCount / frameCount) * 100);
-          if (loaderText) loaderText.textContent = `Loading frames: ${pct}%`;
-          if (loaderBar) loaderBar.style.width = pct + "%";
-          if (!firstFrameDrawn) {
-            firstFrameDrawn = true;
-            drawImageToCover(img);
-          }
-        };
-        img.src = frameUrl(i);
+    function onVideoLoadedMetadata() {
+      videoLoaded = true;
+      video.currentTime = 0;
+      
+      if (loaderText) loaderText.textContent = "Video loaded: 100%";
+      if (loaderBar) loaderBar.style.width = "100%";
+      
+      if (!firstFrameDrawn) {
+        firstFrameDrawn = true;
+        drawVideoToCover();
+      }
+    }
+
+    function onVideoProgress() {
+      if (video.buffered.length > 0 && video.duration) {
+        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+        const pct = Math.round((bufferedEnd / video.duration) * 100);
+        if (loaderText) loaderText.textContent = `Loading video: ${pct}%`;
+        if (loaderBar) loaderBar.style.width = pct + "%";
       }
     }
 
     function onScroll() {
       scrollTarget = computeScrollPercent();
     }
+
     function onResize() {
       resizeCanvas();
       if (firstFrameDrawn) {
-        const img = images.find(Boolean);
-        if (img) drawImageToCover(img);
+        drawVideoToCover();
       }
     }
 
     resizeCanvas();
-    preloadAll();
+    
+    video.addEventListener("loadedmetadata", onVideoLoadedMetadata);
+    video.addEventListener("progress", onVideoProgress);
+    video.addEventListener("seeked", drawVideoToCover);
+    
     rafId = requestAnimationFrame(loop);
     window.addEventListener("scroll", onScroll);
     onScroll();
@@ -122,9 +120,12 @@ function Home() {
       cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      images = [];
+      video.removeEventListener("loadedmetadata", onVideoLoadedMetadata);
+      video.removeEventListener("progress", onVideoProgress);
+      video.removeEventListener("seeked", drawVideoToCover);
     };
   }, [showCanvas]);
+
   useEffect(() => {
     if (!hasLoaded && !showCanvas) {
       document.body.style.overflowY = "hidden";
@@ -146,11 +147,21 @@ function Home() {
 
       {showCanvas && (
         <>
+          <video
+            ref={videoRef}
+            src="/videos/video2.mp4"
+            preload="auto"
+            playsInline
+            muted
+            crossOrigin="anonymous"
+            style={{ display: "none" }}
+          />
+
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
 
           <div id="loader" aria-hidden="true">
             <div id="loader-text" ref={loaderTextRef}>
-              Loading frames: 0%
+              Loading video: 0%
             </div>
             <div className="bar">
               <i id="loader-bar" ref={loaderBarRef}></i>

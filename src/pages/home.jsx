@@ -11,6 +11,7 @@ function Home() {
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
   const debugRef = useRef(null);
+  const placeholderRefs = useRef([]);
 
   useEffect(() => {
     if (!showCanvas) return;
@@ -22,13 +23,20 @@ function Home() {
     const video = videoRef.current;
     const loaderText = loaderTextRef.current;
     const loaderBar = loaderBarRef.current;
-    const debugEl = debugRef.current;
 
     let videoLoaded = false;
     let scrollTarget = 0;
     let smooth = 0;
     let firstFrameDrawn = false;
     let rafId = 0;
+
+    const snapZones = [
+      { start: 0.15, end: 0.25, strength: 0.3 },
+      { start: 0.35, end: 0.45, strength: 0.3 },
+      { start: 0.55, end: 0.65, strength: 0.3 },
+      { start: 0.75, end: 0.85, strength: 0.3 },
+      { start: 0.9, end: 0.98, strength: 0.3 },
+    ];
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -60,25 +68,91 @@ function Home() {
       return Math.max(0, Math.min(1, el.scrollTop / docH));
     }
 
+    function getEasingForScroll(scrollPercent) {
+      for (let zone of snapZones) {
+        if (scrollPercent >= zone.start && scrollPercent <= zone.end) {
+          return easing * zone.strength;
+        }
+      }
+      return easing;
+    }
+
+    function animatePlaceholders() {
+      placeholderRefs.current.forEach((placeholder) => {
+        if (!placeholder) return;
+
+        const child = placeholder.querySelector(".animated-content");
+        if (!child) return;
+
+        const rect = placeholder.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Get element position relative to viewport center
+        const elementCenter = rect.top + rect.height / 2;
+        const viewportCenter = windowHeight / 2;
+        const distanceFromCenter = elementCenter - viewportCenter;
+
+        // Normalize distance (-1 when fully above, +1 when fully below, 0 at center)
+        const normalizedDistance = distanceFromCenter / (windowHeight / 2);
+
+        // Animation zones:
+        // Phase 1: Slide up + Fade in (from 0.8 to 0.3)
+        // Phase 2: Stay visible (from 0.3 to -0.3)
+        // Phase 3: Slide up + Fade out (from -0.3 to -0.8)
+
+        let opacity = 0;
+        let translateY = 0;
+
+        if (normalizedDistance > 0.8) {
+          // Below viewport - not visible yet
+          opacity = 0;
+          translateY = 40;
+        } else if (normalizedDistance > 0.3) {
+          // Sliding up + fading in
+          const progress = (0.8 - normalizedDistance) / 0.5; // 0 to 1
+          opacity = progress;
+          translateY = 40 * (1 - progress);
+        } else if (normalizedDistance >= -0.3) {
+          // Fully visible at center
+          opacity = 1;
+          translateY = 0;
+        } else if (normalizedDistance >= -0.8) {
+          // Sliding up + fading out
+          const progress = (-0.3 - normalizedDistance) / 0.5; // 0 to 1
+          opacity = 1 - progress;
+          translateY = -40 * progress;
+        } else {
+          // Above viewport - completely faded out
+          opacity = 0;
+          translateY = -40;
+        }
+
+        child.style.transform = `translateY(${translateY}px)`;
+        child.style.opacity = opacity;
+      });
+    }
+
     function loop() {
-      smooth += (scrollTarget - smooth) * easing;
-      
+      const currentEasing = getEasingForScroll(scrollTarget);
+      smooth += (scrollTarget - smooth) * currentEasing;
+
       if (videoLoaded && video.duration) {
         const targetTime = smooth * video.duration;
         video.currentTime = targetTime;
       }
-      
+
       drawVideoToCover();
+      animatePlaceholders();
       rafId = requestAnimationFrame(loop);
     }
 
     function onVideoLoadedMetadata() {
       videoLoaded = true;
       video.currentTime = 0;
-      
+
       if (loaderText) loaderText.textContent = "Video loaded: 100%";
       if (loaderBar) loaderBar.style.width = "100%";
-      
+
       if (!firstFrameDrawn) {
         firstFrameDrawn = true;
         drawVideoToCover();
@@ -106,11 +180,11 @@ function Home() {
     }
 
     resizeCanvas();
-    
+
     video.addEventListener("loadedmetadata", onVideoLoadedMetadata);
     video.addEventListener("progress", onVideoProgress);
     video.addEventListener("seeked", drawVideoToCover);
-    
+
     rafId = requestAnimationFrame(loop);
     window.addEventListener("scroll", onScroll);
     onScroll();
@@ -124,6 +198,50 @@ function Home() {
       video.removeEventListener("progress", onVideoProgress);
       video.removeEventListener("seeked", drawVideoToCover);
     };
+  }, [showCanvas]);
+
+  useEffect(() => {
+    if (!showCanvas) return;
+
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: "0px",
+    };
+
+    const animateCounter = (element, target) => {
+      let current = 0;
+      const increment = target / 80;
+      const duration = 2000;
+      const stepTime = duration / 80;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target + "+";
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current) + "+";
+        }
+      }, stepTime);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (
+          entry.isIntersecting &&
+          !entry.target.classList.contains("animated")
+        ) {
+          entry.target.classList.add("animated");
+          const target = parseInt(entry.target.dataset.target);
+          animateCounter(entry.target, target);
+        }
+      });
+    }, observerOptions);
+
+    const statNumbers = document.querySelectorAll(".stat-number");
+    statNumbers.forEach((stat) => observer.observe(stat));
+
+    return () => observer.disconnect();
   }, [showCanvas]);
 
   useEffect(() => {
@@ -158,31 +276,242 @@ function Home() {
           />
 
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
+          <div className="canvas-overlay"></div>
 
-          <div id="loader" aria-hidden="true">
+          {/* <div id="loader" aria-hidden="true">
             <div id="loader-text" ref={loaderTextRef}>
               Loading video: 0%
             </div>
             <div className="bar">
               <i id="loader-bar" ref={loaderBarRef}></i>
             </div>
-          </div>
+          </div> */}
 
-          <div id="debug" ref={debugRef} aria-hidden="true">
+          {/* <div id="debug" ref={debugRef} aria-hidden="true">
             debug: initializing...
+          </div> */}
+
+          {/* Placeholder 1: Logo */}
+          <div
+            className="content-block logo-block"
+            ref={(el) => (placeholderRefs.current[0] = el)}
+          >
+            <div className="animated-content">
+              <img src="/var.png" alt="Varchas Logo" className="logo-image" />
+            </div>
           </div>
 
-          <div className="content-block">
-            <h1>PlaceHolders</h1>
+          {/* Placeholder 2: Theme */}
+          <div
+            className="content-block theme-block"
+            ref={(el) => (placeholderRefs.current[1] = el)}
+          >
+            <div className="animated-content">
+              <div className="theme-inner">
+                <div className="theme-title">ECHOES OF OLYMPIA</div>
+                <div className="theme-desc">
+                  In the ancient land of Olympia, legends weren't born — they
+                  were forged. Every heartbeat on the field, every breath before
+                  the finish line, carried the promise of glory. Centuries
+                  later, those echoes still resound — in every athlete who dares
+                  to dream, in every spirit that refuses to yield. <br /><br />This year, we
+                  bring those echoes back to life. As the torch of competition
+                  burns bright once again, we step into the arena — not as mere
+                  players, but as warriors chasing immortality. "Echoes of
+                  Olympia" is more than a sports fest — it's a revival of that
+                  eternal flame, a celebration of passion, pride, and
+                  perseverance. <br /><br />Here, every race, every match, every cheer
+                  becomes part of a legacy that transcends time. Because glory
+                  fades… but echoes — they live forever.
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="content-block">
-            <h1>PlaceHolders</h1>
+
+          {/* Placeholder 3: About and Aftermovies */}
+          <div
+            className="content-block about-block"
+            ref={(el) => (placeholderRefs.current[2] = el)}
+          >
+            <div className="animated-content">
+              <div className="about-container">
+                <div className="about-section">
+                  <div className="section-header">
+                    <h2 className="section-title">AFTERMOVIE</h2>
+                  </div>
+                  <div className="video-container">
+                    <iframe
+                      width="100%"
+                      height="315"
+                      src="https://www.youtube.com/embed/6hOYDPt8R-s?si=jV8rLLCPPe8y5l1j"
+                      title="Varchas 2022 Aftermovie"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </div>
+
+                <div className="divider"></div>
+
+                <div className="about-section">
+                  <h2 className="section-title">ABOUT Varchas</h2>
+                  <p className="about-text">
+                    Varchas, the annual sports fest of IIT Jodhpur, is a grand celebration of athleticism, teamwork, and sportsmanship. Bringing together colleges from across India, it features thrilling competitions in cricket, football, basketball, athletics, and more. With energetic matches, vibrant nights, and electrifying spirit, Varchas embodies the true essence of passion, perseverance, and victory on the field.
+                  </p>
+                  <div className="stats-grid">
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="50">
+                        0+
+                      </div>
+                      <div className="stat-label">Colleges</div>
+                    </div>
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="20">
+                        0+
+                      </div>
+                      <div className="stat-label">Events</div>
+                    </div>
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="15">
+                        0+
+                      </div>
+                      <div className="stat-label">Events</div>
+                    </div>
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="29">
+                        0+
+                      </div>
+                      <div className="stat-label">Footfall (K)</div>
+                    </div>
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="29">
+                        0+
+                      </div>
+                      <div className="stat-label">Footfall (K)</div>
+                    </div>
+                    <div className="stat-item">
+                      <div className="stat-number" data-target="29">
+                        0+
+                      </div>
+                      <div className="stat-label">Footfall (K)</div>
+                    </div>
+                    {/* <div className="stat-item large">
+                      <div className="stat-number" data-target="6">
+                        0+
+                      </div>
+                      <div className="stat-label">Eyeballs (M)</div>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="content-block">
-            <h1>PlaceHolders</h1>
+
+          {/* Placeholder 4: Kanreki's Oraculum with Images */}
+          <div
+            className="content-block oraculum-block"
+            ref={(el) => (placeholderRefs.current[3] = el)}
+          >
+            <div className="animated-content">
+              <div className="oraculum-container">
+                <h1 className="oraculum-title">GALLERY</h1>
+
+                {/* Image Gallery */}
+                <div className="oraculum-gallery">
+                  <div className="gallery-row">
+                    <img
+                      src="/images/image1.jpg"
+                      alt="Varchas 1"
+                      className="gallery-image"
+                    />
+                    <img
+                      src="/images/image2.jpg"
+                      alt="Varchas 2"
+                      className="gallery-image"
+                    />
+                    <img
+                      src="/images/image3.jpg"
+                      alt="Varchas 3"
+                      className="gallery-image"
+                    />
+                  </div>
+                  <div className="gallery-row">
+                    <img
+                      src="/images/image4.jpg"
+                      alt="Varchas 4"
+                      className="gallery-image"
+                    />
+                    <img
+                      src="/images/image5.jpg"
+                      alt="Varchas 5"
+                      className="gallery-image"
+                    />
+                    <img
+                      src="/images/image6.jpg"
+                      alt="Varchas 6"
+                      className="gallery-image"
+                    />
+                  </div>
+                </div>
+
+                {/* <div className="oraculum-text-content">
+                  <p className="oraculum-text">
+                    Beneath October's restless skies, Varchas rises once more—its
+                    flame unbroken through sixty radiant years. From the mists of
+                    time, two eternal figures emerge: the wizard of light, weaving
+                    brilliance and creation, and the master of shadow, conjuring chaos
+                    and doubt.
+                  </p>
+                  <p className="oraculum-text highlight">
+                    This year, the fire does not return. It renews. And the battle of
+                    light and shadow begins again.
+                  </p>
+                </div> */}
+
+                <div className="button-group">
+                  <a href="#media" className="oraculum-btn">
+                    Media
+                  </a>
+                  <a href="#more" className="oraculum-btn">
+                    View More
+                  </a>
+                  <a href="#brochure" className="oraculum-btn">
+                    Brochure
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="content-block">
-            <h1>PlaceHolders</h1>
+
+          {/* Placeholder 5: Join Community */}
+          <div
+            className="content-block community-block"
+            ref={(el) => (placeholderRefs.current[4] = el)}
+          >
+            <div className="animated-content">
+              <div className="community-container">
+                <div className="community-content">
+                  <h1 className="community-title">JOIN THE ARENA</h1>
+                  <h2 className="community-subtitle">
+                    Welcome to Varchas - IIT Jodhpur's Sports Fest!
+                  </h2>
+                  <p className="community-text">
+                    Stay tuned for all the latest updates, match schedules, and exclusive highlights from our annual sporting extravaganza. Experience the adrenaline, teamwork, and passion as athletes from across the nation compete for glory. Join us in celebrating the spirit of sportsmanship and victory — this is where champions are made!
+                  </p>
+                  <p className="community-highlight">
+                    This is where champions rise!
+                  </p>
+                  <a href="https://whatsapp.com" className="whatsapp-btn">
+                    <span className="whatsapp-icon"></span>
+                    Join WhatsApp Channel
+                  </a>
+                </div>
+                <div className="community-image">
+                  <img src="/sample.jpg" alt="Community" />
+                </div>
+              </div>
+            </div>
           </div>
         </>
       )}

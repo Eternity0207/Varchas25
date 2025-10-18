@@ -45,7 +45,7 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.296);
   z-index: 1;
   pointer-events: none;
 }
@@ -136,7 +136,7 @@ body {
 }
 
 .theme-inner {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 20px;
@@ -179,7 +179,7 @@ body {
   grid-template-columns: 1fr auto 1fr;
   gap: 50px;
   align-items: start;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
   padding: 40px;
   border-radius: 20px;
@@ -280,7 +280,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
   padding: 40px 35px;
   border-radius: 20px;
@@ -387,7 +387,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
   padding: 50px 40px;
   border-radius: 20px;

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Loader from "../components/loader";
-import useSessionStorage from "../../hooks/useSessionStorage";
+import useSessionStorage from "../hooks/useSessionStorage";
 import "../styles/home.css";
 
 function Home() {
@@ -310,19 +310,19 @@ function Home() {
               <div className="theme-inner">
                 <div className="theme-title">ECHOES OF OLYMPIA</div>
                 <div className="theme-desc">
-                  In the ancient land of Olympia, legends weren't born — they
+                  In the ancient land of Olympia, legends weren't born - they
                   were forged. Every heartbeat on the field, every breath before
                   the finish line, carried the promise of glory. Centuries
-                  later, those echoes still resound — in every athlete who dares
+                  later, those echoes still resound - in every athlete who dares
                   to dream, in every spirit that refuses to yield. <br /><br />This year, we
                   bring those echoes back to life. As the torch of competition
-                  burns bright once again, we step into the arena — not as mere
+                  burns bright once again, we step into the arena - not as mere
                   players, but as warriors chasing immortality. "Echoes of
-                  Olympia" is more than a sports fest — it's a revival of that
+                  Olympia" is more than a sports fest - it's a revival of that
                   eternal flame, a celebration of passion, pride, and
                   perseverance. <br /><br />Here, every race, every match, every cheer
                   becomes part of a legacy that transcends time. Because glory
-                  fades… but echoes — they live forever.
+                  fades… but echoes - they live forever.
                 </div>
               </div>
             </div>
@@ -470,9 +470,6 @@ function Home() {
                 </div> */}
 
                 <div className="button-group">
-                  <a href="#media" className="oraculum-btn">
-                    Media
-                  </a>
                   <a href="#more" className="oraculum-btn">
                     View More
                   </a>
@@ -497,7 +494,7 @@ function Home() {
                     Welcome to Varchas - IIT Jodhpur's Sports Fest!
                   </h2>
                   <p className="community-text">
-                    Stay tuned for all the latest updates, match schedules, and exclusive highlights from our annual sporting extravaganza. Experience the adrenaline, teamwork, and passion as athletes from across the nation compete for glory. Join us in celebrating the spirit of sportsmanship and victory — this is where champions are made!
+                    Stay tuned for all the latest updates, match schedules, and exclusive highlights from our annual sporting extravaganza. Experience the adrenaline, teamwork, and passion as athletes from across the nation compete for glory. Join us in celebrating the spirit of sportsmanship and victory - this is where champions are made!
                   </p>
                   <p className="community-highlight">
                     This is where champions rise!

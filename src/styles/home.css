@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  font-family: 'Cinzel', serif;
+}
+
 :root {
   --bg: #000;
   --gold: #d4af37;

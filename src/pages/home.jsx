@@ -445,7 +445,7 @@ function Home() {
                 </div> */}
 
                 <div className="button-group">
-                  <a href="#more" className="oraculum-btn">
+                  <a href="/gallery" className="oraculum-btn">
                     View More
                   </a>
                   <a href="#brochure" className="oraculum-btn">

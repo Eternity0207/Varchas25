@@ -6,37 +6,41 @@ import "../styles/home.css";
 function Home() {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
-  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
-  const debugRef = useRef(null);
   const placeholderRefs = useRef([]);
 
   useEffect(() => {
     if (!showCanvas) return;
 
+    const frameCount = 583;
+    const prefix = '00';
+    const ext = '.jpg';
+    const padding = 3;
+    const framesPath = '/frames/';
     const easing = 0.09;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const video = videoRef.current;
     const loaderText = loaderTextRef.current;
     const loaderBar = loaderBarRef.current;
 
-    let videoLoaded = false;
+    let images = new Array(frameCount);
+    let loadedCount = 0;
     let scrollTarget = 0;
     let smooth = 0;
     let firstFrameDrawn = false;
     let rafId = 0;
 
-    const snapZones = [
-      { start: 0.15, end: 0.25, strength: 0.3 },
-      { start: 0.35, end: 0.45, strength: 0.3 },
-      { start: 0.55, end: 0.65, strength: 0.3 },
-      { start: 0.75, end: 0.85, strength: 0.3 },
-      { start: 0.9, end: 0.98, strength: 0.3 },
-    ];
+
+    function pad(num) { 
+      return String(num).padStart(padding, '0'); 
+    }
+    
+    function frameUrl(i) { 
+      return framesPath + prefix + pad(i) + ext; 
+    }
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
@@ -45,20 +49,19 @@ function Home() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function drawVideoToCover() {
-      if (!video || video.readyState < 2) return;
+    function drawImageToCover(img) {
+      if (!img || !img.width) return;
       const vw = canvas.clientWidth;
       const vh = canvas.clientHeight;
-      const iw = video.videoWidth;
-      const ih = video.videoHeight;
-      if (!iw || !ih) return;
+      const iw = img.width;
+      const ih = img.height;
       const scale = Math.max(vw / iw, vh / ih);
       const w = iw * scale;
       const h = ih * scale;
       const x = (vw - w) / 2;
       const y = (vh - h) / 2;
       ctx.clearRect(0, 0, vw, vh);
-      ctx.drawImage(video, x, y, w, h);
+      ctx.drawImage(img, x, y, w, h);
     }
 
     function computeScrollPercent() {
@@ -68,14 +71,6 @@ function Home() {
       return Math.max(0, Math.min(1, el.scrollTop / docH));
     }
 
-    function getEasingForScroll(scrollPercent) {
-      for (let zone of snapZones) {
-        if (scrollPercent >= zone.start && scrollPercent <= zone.end) {
-          return easing * zone.strength;
-        }
-      }
-      return easing;
-    }
 
     function animatePlaceholders() {
       placeholderRefs.current.forEach((placeholder) => {
@@ -132,41 +127,39 @@ function Home() {
       });
     }
 
-    function loop() {
-      const currentEasing = getEasingForScroll(scrollTarget);
-      smooth += (scrollTarget - smooth) * currentEasing;
-
-      if (videoLoaded && video.duration) {
-        const targetTime = smooth * video.duration;
-        video.currentTime = targetTime;
+    async function preloadAll() {
+      for (let i = 1; i <= frameCount; i++) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          images[i - 1] = img;
+          loadedCount++;
+          const pct = Math.round((loadedCount / frameCount) * 100);
+          // if (loaderText) loaderText.textContent = `Loading frames: ${loadedCount} / ${frameCount} (${pct}%)`;
+          // if (loaderBar) loaderBar.style.width = pct + '%';
+          if (!firstFrameDrawn) {
+            firstFrameDrawn = true;
+            drawImageToCover(img);
+          }
+          if (loadedCount === frameCount) {
+            // if (loaderBar) loaderBar.style.width = '100%';
+          }
+        };
+        img.src = frameUrl(i);
       }
+    }
 
-      drawVideoToCover();
+    function loop() {
+      smooth += (scrollTarget - smooth) * easing;
+
+      const index = Math.floor(smooth * (frameCount - 1));
+      let img = images[index] || images.find(Boolean);
+      if (img) drawImageToCover(img);
+
       animatePlaceholders();
       rafId = requestAnimationFrame(loop);
     }
 
-    function onVideoLoadedMetadata() {
-      videoLoaded = true;
-      video.currentTime = 0;
-
-      if (loaderText) loaderText.textContent = "Video loaded: 100%";
-      if (loaderBar) loaderBar.style.width = "100%";
-
-      if (!firstFrameDrawn) {
-        firstFrameDrawn = true;
-        drawVideoToCover();
-      }
-    }
-
-    function onVideoProgress() {
-      if (video.buffered.length > 0 && video.duration) {
-        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-        const pct = Math.round((bufferedEnd / video.duration) * 100);
-        if (loaderText) loaderText.textContent = `Loading video: ${pct}%`;
-        if (loaderBar) loaderBar.style.width = pct + "%";
-      }
-    }
 
     function onScroll() {
       scrollTarget = computeScrollPercent();
@@ -175,15 +168,14 @@ function Home() {
     function onResize() {
       resizeCanvas();
       if (firstFrameDrawn) {
-        drawVideoToCover();
+        const index = Math.floor(smooth * (frameCount - 1));
+        let img = images[index] || images.find(Boolean);
+        if (img) drawImageToCover(img);
       }
     }
 
     resizeCanvas();
-
-    video.addEventListener("loadedmetadata", onVideoLoadedMetadata);
-    video.addEventListener("progress", onVideoProgress);
-    video.addEventListener("seeked", drawVideoToCover);
+    preloadAll();
 
     rafId = requestAnimationFrame(loop);
     window.addEventListener("scroll", onScroll);
@@ -194,9 +186,6 @@ function Home() {
       cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      video.removeEventListener("loadedmetadata", onVideoLoadedMetadata);
-      video.removeEventListener("progress", onVideoProgress);
-      video.removeEventListener("seeked", drawVideoToCover);
     };
   }, [showCanvas]);
 
@@ -265,30 +254,16 @@ function Home() {
 
       {showCanvas && (
         <>
-          <video
-            ref={videoRef}
-            src="/videos/video2.mp4"
-            preload="auto"
-            playsInline
-            muted
-            crossOrigin="anonymous"
-            style={{ display: "none" }}
-          />
-
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
           <div className="canvas-overlay"></div>
 
           {/* <div id="loader" aria-hidden="true">
             <div id="loader-text" ref={loaderTextRef}>
-              Loading video: 0%
+              Loading frames: 0 / 0
             </div>
             <div className="bar">
               <i id="loader-bar" ref={loaderBarRef}></i>
             </div>
-          </div> */}
-
-          {/* <div id="debug" ref={debugRef} aria-hidden="true">
-            debug: initializing...
           </div> */}
 
           {/* Placeholder 1: Logo */}

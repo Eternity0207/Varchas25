@@ -9,7 +9,7 @@ function Home() {
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
-  const placeholderRefs = useRef([]);
+  const contentRefs = useRef([]);
 
   useEffect(() => {
     if (!showCanvas) return;
@@ -33,13 +33,12 @@ function Home() {
     let firstFrameDrawn = false;
     let rafId = 0;
 
-
-    function pad(num) { 
-      return String(num).padStart(padding, '0'); 
+    function pad(num) {
+      return String(num).padStart(padding, '0');
     }
-    
-    function frameUrl(i) { 
-      return framesPath + prefix + pad(i) + ext; 
+
+    function frameUrl(i) {
+      return framesPath + prefix + pad(i) + ext;
     }
 
     function resizeCanvas() {
@@ -71,59 +70,52 @@ function Home() {
       return Math.max(0, Math.min(1, el.scrollTop / docH));
     }
 
+    function animateContents() {
+      const totalContents = contentRefs.current.length;
+      const currentScrollPercent = computeScrollPercent();
 
-    function animatePlaceholders() {
-      placeholderRefs.current.forEach((placeholder) => {
-        if (!placeholder) return;
+      contentRefs.current.forEach((content, index) => {
+        if (!content) return;
 
-        const child = placeholder.querySelector(".animated-content");
-        if (!child) return;
+        // Calculate scroll range for this content (each takes 1/totalContents of scroll)
+        const startScroll = index / totalContents;
+        const endScroll = (index + 1) / totalContents;
+        const contentScrollRange = endScroll - startScroll;
 
-        const rect = placeholder.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        // Get element position relative to viewport center
-        const elementCenter = rect.top + rect.height / 2;
-        const viewportCenter = windowHeight / 2;
-        const distanceFromCenter = elementCenter - viewportCenter;
-
-        // Normalize distance (-1 when fully above, +1 when fully below, 0 at center)
-        const normalizedDistance = distanceFromCenter / (windowHeight / 2);
-
-        // Animation zones:
-        // Phase 1: Slide up + Fade in (from 0.8 to 0.3)
-        // Phase 2: Stay visible (from 0.3 to -0.3)
-        // Phase 3: Slide up + Fade out (from -0.3 to -0.8)
+        // Phases within this content's scroll range:
+        // 0-0.3: Zoom in
+        // 0.3-0.7: Stay constant
+        // 0.7-1.0: Zoom out
 
         let opacity = 0;
-        let translateY = 0;
+        let scale = 0.5;
 
-        if (normalizedDistance > 0.8) {
-          // Below viewport - not visible yet
+        if (currentScrollPercent < startScroll) {
+          // Before this content's range - invisible
           opacity = 0;
-          translateY = 40;
-        } else if (normalizedDistance > 0.3) {
-          // Sliding up + fading in
-          const progress = (0.8 - normalizedDistance) / 0.5; // 0 to 1
+          scale = 0.5;
+        } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.3)) {
+          // Zoom in phase
+          const progress = (currentScrollPercent - startScroll) / (contentScrollRange * 0.3);
           opacity = progress;
-          translateY = 40 * (1 - progress);
-        } else if (normalizedDistance >= -0.3) {
-          // Fully visible at center
+          scale = 0.5 + (0.5 * progress); // 0.5 to 1.0
+        } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.7)) {
+          // Constant phase - fully visible
           opacity = 1;
-          translateY = 0;
-        } else if (normalizedDistance >= -0.8) {
-          // Sliding up + fading out
-          const progress = (-0.3 - normalizedDistance) / 0.5; // 0 to 1
+          scale = 1.0;
+        } else if (currentScrollPercent < endScroll) {
+          // Zoom out phase
+          const progress = (currentScrollPercent - (startScroll + contentScrollRange * 0.7)) / (contentScrollRange * 0.3);
           opacity = 1 - progress;
-          translateY = -40 * progress;
+          scale = 1.0 - (0.5 * progress); // 1.0 to 0.5
         } else {
-          // Above viewport - completely faded out
+          // After this content's range - invisible
           opacity = 0;
-          translateY = -40;
+          scale = 0.5;
         }
 
-        child.style.transform = `translateY(${translateY}px)`;
-        child.style.opacity = opacity;
+        content.style.transform = `scale(${scale})`;
+        content.style.opacity = opacity;
       });
     }
 
@@ -135,14 +127,9 @@ function Home() {
           images[i - 1] = img;
           loadedCount++;
           const pct = Math.round((loadedCount / frameCount) * 100);
-          // if (loaderText) loaderText.textContent = `Loading frames: ${loadedCount} / ${frameCount} (${pct}%)`;
-          // if (loaderBar) loaderBar.style.width = pct + '%';
           if (!firstFrameDrawn) {
             firstFrameDrawn = true;
             drawImageToCover(img);
-          }
-          if (loadedCount === frameCount) {
-            // if (loaderBar) loaderBar.style.width = '100%';
           }
         };
         img.src = frameUrl(i);
@@ -156,10 +143,9 @@ function Home() {
       let img = images[index] || images.find(Boolean);
       if (img) drawImageToCover(img);
 
-      animatePlaceholders();
+      animateContents();
       rafId = requestAnimationFrame(loop);
     }
-
 
     function onScroll() {
       scrollTarget = computeScrollPercent();
@@ -257,31 +243,21 @@ function Home() {
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
           <div className="canvas-overlay"></div>
 
-          {/* <div id="loader" aria-hidden="true">
-            <div id="loader-text" ref={loaderTextRef}>
-              Loading frames: 0 / 0
-            </div>
-            <div className="bar">
-              <i id="loader-bar" ref={loaderBarRef}></i>
-            </div>
-          </div> */}
-
-          {/* Placeholder 1: Logo */}
-          <div
-            className="content-block logo-block"
-            ref={(el) => (placeholderRefs.current[0] = el)}
-          >
-            <div className="animated-content">
+          {/* Single content block container with fixed positioning */}
+          <div className="content-wrapper">
+            {/* Content 1: Logo */}
+            <div
+              className="content-item"
+              ref={(el) => (contentRefs.current[0] = el)}
+            >
               <img src="/var.png" alt="Varchas Logo" className="logo-image" />
             </div>
-          </div>
 
-          {/* Placeholder 2: Theme */}
-          <div
-            className="content-block theme-block"
-            ref={(el) => (placeholderRefs.current[1] = el)}
-          >
-            <div className="animated-content">
+            {/* Content 2: Theme */}
+            <div
+              className="content-item"
+              ref={(el) => (contentRefs.current[1] = el)}
+            >
               <div className="theme-inner">
                 <div className="theme-title">ECHOES OF OLYMPIA</div>
                 <div className="theme-desc">
@@ -301,14 +277,12 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Placeholder 3: About and Aftermovies */}
-          <div
-            className="content-block about-block"
-            ref={(el) => (placeholderRefs.current[2] = el)}
-          >
-            <div className="animated-content">
+            {/* Content 3: About and Aftermovies */}
+            <div
+              className="content-item"
+              ref={(el) => (contentRefs.current[2] = el)}
+            >
               <div className="about-container">
                 <div className="about-section">
                   <div className="section-header">
@@ -371,28 +345,19 @@ function Home() {
                       </div>
                       <div className="stat-label">Footfall (K)</div>
                     </div>
-                    {/* <div className="stat-item large">
-                      <div className="stat-number" data-target="6">
-                        0+
-                      </div>
-                      <div className="stat-label">Eyeballs (M)</div>
-                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Placeholder 4: Kanreki's Oraculum with Images */}
-          <div
-            className="content-block oraculum-block"
-            ref={(el) => (placeholderRefs.current[3] = el)}
-          >
-            <div className="animated-content">
+            {/* Content 4: Gallery */}
+            <div
+              className="content-item"
+              ref={(el) => (contentRefs.current[3] = el)}
+            >
               <div className="oraculum-container">
                 <h1 className="oraculum-title">GALLERY</h1>
 
-                {/* Image Gallery */}
                 <div className="oraculum-gallery">
                   <div className="gallery-row">
                     <img
@@ -430,20 +395,6 @@ function Home() {
                   </div>
                 </div>
 
-                {/* <div className="oraculum-text-content">
-                  <p className="oraculum-text">
-                    Beneath October's restless skies, Varchas rises once more—its
-                    flame unbroken through sixty radiant years. From the mists of
-                    time, two eternal figures emerge: the wizard of light, weaving
-                    brilliance and creation, and the master of shadow, conjuring chaos
-                    and doubt.
-                  </p>
-                  <p className="oraculum-text highlight">
-                    This year, the fire does not return. It renews. And the battle of
-                    light and shadow begins again.
-                  </p>
-                </div> */}
-
                 <div className="button-group">
                   <a href="/gallery" className="oraculum-btn">
                     View More
@@ -454,14 +405,12 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Placeholder 5: Join Community */}
-          <div
-            className="content-block community-block"
-            ref={(el) => (placeholderRefs.current[4] = el)}
-          >
-            <div className="animated-content">
+            {/* Content 5: Join Community */}
+            <div
+              className="content-item"
+              ref={(el) => (contentRefs.current[4] = el)}
+            >
               <div className="community-container">
                 <div className="community-content">
                   <h1 className="community-title">JOIN THE ARENA</h1>
@@ -485,6 +434,9 @@ function Home() {
               </div>
             </div>
           </div>
+
+          {/* Spacer for scroll */}
+          <div className="scroll-spacer"></div>
         </>
       )}
     </>

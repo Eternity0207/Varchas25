@@ -107,11 +107,11 @@ function Home() {
           // Zoom out phase
           const progress = (currentScrollPercent - (startScroll + contentScrollRange * 0.7)) / (contentScrollRange * 0.3);
           opacity = 1 - progress;
-          scale = 1.0 - (0.5 * progress); // 1.0 to 0.5
+          scale = 1.0 + (0.5 * progress); // 1.0 to 0.5
         } else {
           // After this content's range - invisible
           opacity = 0;
-          scale = 0.5;
+          scale = 1.5;
         }
 
         content.style.transform = `scale(${scale})`;

@@ -94,7 +94,7 @@ function Team() {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 350px))',
-        gap: '3rem',
+        gap: '5rem',
         maxWidth: '1400px',
         margin: '0 auto',
         padding: '0 2rem',

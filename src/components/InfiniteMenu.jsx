@@ -599,8 +599,8 @@ class InfiniteGridMenu {
   constructor(canvas, items, onActiveItemChange, onMovementChange, onInit = null) {
     this.canvas = canvas;
     this.items = items || [];
-    this.onActiveItemChange = onActiveItemChange || (() => {});
-    this.onMovementChange = onMovementChange || (() => {});
+    this.onActiveItemChange = onActiveItemChange || (() => { });
+    this.onMovementChange = onMovementChange || (() => { });
     this.#init(onInit);
   }
 

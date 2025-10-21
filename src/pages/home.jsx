@@ -6,10 +6,44 @@ import "../styles/home.css";
 function Home() {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
+  const [galleryImagesLoaded, setGalleryImagesLoaded] = useState(false);
   const canvasRef = useRef(null);
   const loaderTextRef = useRef(null);
   const loaderBarRef = useRef(null);
   const contentRefs = useRef([]);
+
+  const galleryImages = [
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image1_tyskui.jpg",
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054068/image6_rms0cc.jpg",
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image5_turwzt.jpg",
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image4_glcmss.jpg",
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image2_ri2wzd.jpg",
+    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image3_rnh58o.jpg"
+  ];
+
+  useEffect(() => {
+    if (!showCanvas) return;
+
+    let loadedCount = 0;
+    const totalImages = galleryImages.length;
+
+    galleryImages.forEach((src) => {
+      const img = new Image();
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setGalleryImagesLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setGalleryImagesLoaded(true);
+        }
+      };
+      img.src = src;
+    });
+  }, [showCanvas]);
 
   useEffect(() => {
     if (!showCanvas) return;
@@ -77,39 +111,28 @@ function Home() {
       contentRefs.current.forEach((content, index) => {
         if (!content) return;
 
-        // Calculate scroll range for this content (each takes 1/totalContents of scroll)
         const startScroll = index / totalContents;
         const endScroll = (index + 1) / totalContents;
         const contentScrollRange = endScroll - startScroll;
-
-        // Phases within this content's scroll range:
-        // 0-0.3: Zoom in
-        // 0.3-0.7: Stay constant
-        // 0.7-1.0: Zoom out
 
         let opacity = 0;
         let scale = 0.5;
 
         if (currentScrollPercent < startScroll) {
-          // Before this content's range - invisible
           opacity = 0;
           scale = 0.5;
         } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.3)) {
-          // Zoom in phase
           const progress = (currentScrollPercent - startScroll) / (contentScrollRange * 0.3);
           opacity = progress;
-          scale = 0.5 + (0.5 * progress); // 0.5 to 1.0
+          scale = 0.5 + (0.5 * progress);
         } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.7)) {
-          // Constant phase - fully visible
           opacity = 1;
           scale = 1.0;
         } else if (currentScrollPercent < endScroll) {
-          // Zoom out phase
           const progress = (currentScrollPercent - (startScroll + contentScrollRange * 0.7)) / (contentScrollRange * 0.3);
           opacity = 1 - progress;
-          scale = 1.0 + (0.5 * progress); // 1.0 to 0.5
+          scale = 1.0 + (0.5 * progress);
         } else {
-          // After this content's range - invisible
           opacity = 0;
           scale = 1.5;
         }
@@ -243,7 +266,6 @@ function Home() {
           <canvas id="canvas" ref={canvasRef} aria-hidden="true" />
           <div className="canvas-overlay"></div>
 
-          {/* Single content block container with fixed positioning */}
           <div className="content-wrapper">
             {/* Content 1: Logo */}
             <div
@@ -359,40 +381,46 @@ function Home() {
                 <h1 className="oraculum-title">GALLERY</h1>
 
                 <div className="oraculum-gallery">
-                  <div className="gallery-row">
-                    <img
-                      src="/images/image1.jpg"
-                      alt="Varchas 1"
-                      className="gallery-image"
-                    />
-                    <img
-                      src="/images/image2.jpg"
-                      alt="Varchas 2"
-                      className="gallery-image"
-                    />
-                    <img
-                      src="/images/image3.jpg"
-                      alt="Varchas 3"
-                      className="gallery-image"
-                    />
-                  </div>
-                  <div className="gallery-row">
-                    <img
-                      src="/images/image4.jpg"
-                      alt="Varchas 4"
-                      className="gallery-image"
-                    />
-                    <img
-                      src="/images/image5.jpg"
-                      alt="Varchas 5"
-                      className="gallery-image"
-                    />
-                    <img
-                      src="/images/image6.jpg"
-                      alt="Varchas 6"
-                      className="gallery-image"
-                    />
-                  </div>
+                  {galleryImagesLoaded ? (
+                    <>
+                      <div className="gallery-row">
+                        <img
+                          src={galleryImages[0]}
+                          alt="Varchas 1"
+                          className="gallery-image"
+                        />
+                        <img
+                          src={galleryImages[1]}
+                          alt="Varchas 2"
+                          className="gallery-image"
+                        />
+                        <img
+                          src={galleryImages[2]}
+                          alt="Varchas 3"
+                          className="gallery-image"
+                        />
+                      </div>
+                      <div className="gallery-row">
+                        <img
+                          src={galleryImages[3]}
+                          alt="Varchas 4"
+                          className="gallery-image"
+                        />
+                        <img
+                          src={galleryImages[4]}
+                          alt="Varchas 5"
+                          className="gallery-image"
+                        />
+                        <img
+                          src={galleryImages[5]}
+                          alt="Varchas 6"
+                          className="gallery-image"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="gallery-loading">Loading gallery...</div>
+                  )}
                 </div>
 
                 <div className="button-group">
@@ -435,7 +463,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Spacer for scroll */}
           <div className="scroll-spacer"></div>
         </>
       )}

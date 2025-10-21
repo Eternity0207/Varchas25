@@ -102,7 +102,6 @@ body {
   font-family: monospace;
 }
 
-/* New Fixed Content Structure */
 .content-wrapper {
   position: fixed;
   top: 5%;
@@ -129,6 +128,7 @@ body {
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   pointer-events: auto;
   color: #fff;
+  will-change: transform, opacity;
 }
 
 .scroll-spacer {
@@ -138,7 +138,6 @@ body {
   z-index: 1;
 }
 
-/* Logo */
 .logo-image {
   max-width: 700px;
   width: 90%;
@@ -146,7 +145,6 @@ body {
   filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
 }
 
-/* Theme */
 .theme-inner {
   background: rgba(0, 0, 0, 0.329);
   backdrop-filter: blur(10px);
@@ -178,7 +176,6 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* About */
 .about-container {
   max-width: 1200px;
   width: 100%;
@@ -273,7 +270,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Gallery/Oraculum */
 .oraculum-container {
   max-width: 1000px;
   width: 100%;
@@ -303,6 +299,16 @@ body {
   flex-direction: column;
   gap: 12px;
   margin: 15px 0;
+  min-height: 424px;
+}
+
+.gallery-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 424px;
+  color: var(--gold);
+  font-size: 1.2rem;
 }
 
 .gallery-row {
@@ -318,10 +324,13 @@ body {
   object-fit: cover;
   border: 1px solid rgba(212, 175, 55, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .gallery-image:hover {
-  transform: scale(1.03);
+  transform: scale(1.03) translateZ(0);
   box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 
@@ -375,7 +384,6 @@ body {
   color: white;
 }
 
-/* Community */
 .community-container {
   max-width: 1100px;
   width: 100%;
@@ -469,7 +477,6 @@ body {
   display: block;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .about-container {
     max-width: 100%;
@@ -566,7 +573,6 @@ body {
   }
 
   .about-container {
-    /* grid-template-columns: 1fr; */
     gap: 10px;
     height: 90%;
   }
@@ -586,18 +592,15 @@ body {
 }
 
 @media (max-width: 480px) {
-  /* give screen breathing room */
   .content-item {
     padding: 28px 0px;
   }
 
-  /* logo */
   .logo-image {
     width: 90%;
     margin-bottom: 10px;
   }
 
-  /* headings */
   .theme-title,
   .oraculum-title,
   .community-title,
@@ -607,7 +610,6 @@ body {
     margin-bottom: 6px;
   }
 
-  /* section subtitle / body text */
   .theme-desc,
   .about-text,
   .oraculum-text,
@@ -618,12 +620,10 @@ body {
     line-height: 1.35;
   }
 
-  /* stat numbers smaller */
   .stat-number {
     font-size: 1.2rem;
   }
 
-  /* gallery / images */
   .gallery-image {
     height: 25vw;
     border-radius: 8px;
@@ -633,19 +633,21 @@ body {
     width: 90%;
   }
 
+  .oraculum-gallery {
+    min-height: 200px;
+  }
+
   .oraculum-gallery .gallery-row {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
 
-  /* buttons smaller */
   .oraculum-btn,
   .whatsapp-btn {
     font-size: 0.82rem;
     padding: 8px 16px;
   }
 
-  /* reduce big container padding */
   .theme-inner,
   .about-container,
   .oraculum-container,
@@ -653,7 +655,6 @@ body {
     padding: 20px;
   }
 
-  /* loader and debug */
   #loader {
     font-size: 12px;
     padding: 6px 8px;

@@ -13,12 +13,12 @@ function Home() {
   const contentRefs = useRef([]);
 
   const galleryImages = [
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image1_tyskui.jpg",
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054068/image6_rms0cc.jpg",
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image5_turwzt.jpg",
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image4_glcmss.jpg",
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image2_ri2wzd.jpg",
-    "https://res.cloudinary.com/dwhf51kja/image/upload/v1761054069/image3_rnh58o.jpg"
+    "https://ik.imagekit.io/bhavishy2801/image1.jpg?updatedAt=1761057131535",
+    "https://ik.imagekit.io/bhavishy2801/image2.jpg?updatedAt=1761057131506",
+    "https://ik.imagekit.io/bhavishy2801/image3.jpg?updatedAt=1761057131599",
+    "https://ik.imagekit.io/bhavishy2801/image4.jpg?updatedAt=1761057131508",
+    "https://ik.imagekit.io/bhavishy2801/image5.jpg?updatedAt=1761057131607",
+    "https://ik.imagekit.io/bhavishy2801/image6.jpg?updatedAt=1761057131385"
   ];
 
   useEffect(() => {

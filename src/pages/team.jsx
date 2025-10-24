@@ -1,54 +1,8 @@
 import React from 'react';
 import ProfileCard from '../components/ProfileCard';
 import '../styles/ProfileCard.css';
+import teamMembers from '../../data.json';
 
-const teamMembers = [
-  {
-    name: 'Alex Rivera',
-    title: 'President',
-    handle: 'alexrivera',
-    status: 'Online',
-    avatarUrl: 'https://i.pravatar.cc/300?img=8',
-    iconUrl: '/logo.png',
-    contactText: 'Contact'
-  },
-  {
-    name: 'Jordan Chen',
-    title: 'Vice President',
-    handle: 'jordanchen',
-    status: 'Online',
-    avatarUrl: 'https://i.pravatar.cc/300?img=11',
-    iconUrl: '/logo.png',
-    contactText: 'Contact'
-  },
-  {
-    name: 'Morgan Blake',
-    title: 'Secretary',
-    handle: 'morganblake',
-    status: 'Online',
-    avatarUrl: 'https://i.pravatar.cc/300?img=3',
-    iconUrl: '/logo.png',
-    contactText: 'Contact'
-  },
-  {
-    name: 'Casey Park',
-    title: 'Treasurer',
-    handle: 'caseypark',
-    status: 'Online',
-    avatarUrl: 'https://i.pravatar.cc/300?img=16',
-    iconUrl: '/logo.png',
-    contactText: 'Contact'
-  },
-  {
-    name: 'Sam Kim',
-    title: 'Event Coordinator',
-    handle: 'thesamkim',
-    status: 'Online',
-    avatarUrl: 'https://i.pravatar.cc/300?img=25',
-    iconUrl: '/logo.png',
-    contactText: 'Contact'
-  }
-];
 
 function Team() {
   const handleContactClick = (memberName) => {
@@ -91,7 +45,8 @@ function Team() {
         </p>
       </div>
       
-      <div style={{
+      <div className='team-grid-container' 
+      style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 350px))',
         gap: '5rem',

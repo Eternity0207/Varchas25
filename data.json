@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Saumitra",
+        "title": "Design and Creativity",
+        "handle": "saumitra",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1XEoCM-A3AiXFk20Sl6n8M1p4GT11sSfR",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Sanidhya Mishra",
+        "title": "ATS / Security",
+        "handle": "sanidhyamishra",
+        "status": "Online",
+        "avatarUrl": "",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Nitin Koronde",
+        "title": "Accommodation",
+        "handle": "nitinkoronde",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1qPw0F7aSp4pdOUt9MefB6SmCmhVJWH0u",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Tushar Nagargoje",
+        "title": "Sports (Basketball)",
+        "handle": "tusharnagargoje",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=15aTWeL4DiX2FTBRrryyDyz5Nfzc-LBMz",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Mayank Dahiya",
+        "title": "Sports (Esports, Chess)",
+        "handle": "mayankdahiya",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=18XyurO_le-pXSxhriq9_jA91OfBNKk49",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Vaibhav Dwivedi",
+        "title": "PR",
+        "handle": "vaibhavdwivedi",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=11L1qTX1nDvjWSIIGaVNxj10Na5R5ub8K",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Apdesh Kumar",
+        "title": "Resources Management",
+        "handle": "apdeshkumar",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1GTOfKc5RPofgeIJOBSFFmMcGqXHP8C5m",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Dhiraj Raj",
+        "title": "Marketing",
+        "handle": "dhirajraj",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1Z-O3C-3m6aBXgqKWEGb9BNwyqgfM_pJE",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Piyush Kumar",
+        "title": "Accommodation (ATS)",
+        "handle": "piyushkumar",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1Pp0YUHpY2QOH2ql0gOj0JO8tECcW0UD4",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    },
+    {
+        "name": "Abhijeet Kumar",
+        "title": "Media",
+        "handle": "abhijeetkumar",
+        "status": "Online",
+        "avatarUrl": "https://drive.google.com/uc?export=view&id=1P9JOtEUMEtZ0UTu81XcebAvOQxpD_6kt",
+        "iconUrl": "/logo.png",
+        "contactText": "Contact"
+    }
+]

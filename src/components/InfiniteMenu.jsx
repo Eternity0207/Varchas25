@@ -830,10 +830,18 @@ class InfiniteGridMenu {
     mat4.invert(this.camera.matrices.view, this.camera.matrix);
   }
 
+  // In the InfiniteGridMenu class...
+
   #updateProjectionMatrix(gl) {
     this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    const height = this.SPHERE_RADIUS * 0.35;
+
+    let fovFactor = 0.4;
+    if (window.innerWidth > 768 && window.innerWidth <= 1200) {
+      fovFactor = 0.53;
+    }
+    const height = this.SPHERE_RADIUS * fovFactor;
     const distance = this.camera.position[2];
+
     if (this.camera.aspect > 1) {
       this.camera.fov = 2 * Math.atan(height / distance);
     } else {

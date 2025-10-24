@@ -30,25 +30,22 @@ const items = [
 
 function Gallery() {
   useEffect(() => {
-    // Hide body scrollbar when gallery is active
     document.body.style.overflow = 'hidden';
-    
     return () => {
-      // Restore body scrollbar when leaving gallery
       document.body.style.overflow = 'auto';
     };
   }, []);
 
   return (
-    <div style={{ 
-      height: '100vh', 
+    <div style={{
+      height: '100vh',
       width: '100vw',
       position: 'fixed',
       top: 0,
       left: 0,
       overflow: 'hidden'
     }}>
-      <InfiniteMenu items={items}/>
+      <InfiniteMenu items={items} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Loader from "../components/loader";
 import useSessionStorage from "../hooks/useSessionStorage";
 import "../styles/home.css";
 
-function Home() {
+function Home({ setShowNavbar }) {
   const [hasLoaded, setHasLoaded] = useSessionStorage("hasLoaded", false);
   const [showCanvas, setShowCanvas] = useState(hasLoaded);
   const [galleryImagesLoaded, setGalleryImagesLoaded] = useState(false);
@@ -112,26 +112,31 @@ function Home() {
         if (!content) return;
 
         const startScroll = index / totalContents;
-        const endScroll = (index + 1) / totalContents;
-        const contentScrollRange = endScroll - startScroll;
+        let endScroll = (index + 1) / totalContents;
 
+        if (index === totalContents - 1) endScroll = 1.05;
+
+        const contentScrollRange = endScroll - startScroll;
         let opacity = 0;
         let scale = 0.5;
 
-        if (currentScrollPercent < startScroll) {
+        if (index === 0 && currentScrollPercent < startScroll + 0.02) {
+          opacity = 1;
+          scale = 1;
+        } else if (currentScrollPercent < startScroll) {
           opacity = 0;
           scale = 0.5;
-        } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.3)) {
+        } else if (currentScrollPercent < startScroll + contentScrollRange * 0.3) {
           const progress = (currentScrollPercent - startScroll) / (contentScrollRange * 0.3);
           opacity = progress;
-          scale = 0.5 + (0.5 * progress);
-        } else if (currentScrollPercent < startScroll + (contentScrollRange * 0.7)) {
+          scale = 0.5 + 0.5 * progress;
+        } else if (currentScrollPercent < startScroll + contentScrollRange * 0.7) {
           opacity = 1;
           scale = 1.0;
         } else if (currentScrollPercent < endScroll) {
           const progress = (currentScrollPercent - (startScroll + contentScrollRange * 0.7)) / (contentScrollRange * 0.3);
           opacity = 1 - progress;
-          scale = 1.0 + (0.5 * progress);
+          scale = 1.0 + 0.5 * progress;
         } else {
           opacity = 0;
           scale = 1.5;
@@ -257,6 +262,7 @@ function Home() {
           onComplete={() => {
             setShowCanvas(true);
             setHasLoaded(true);
+            setShowNavbar(true);
           }}
         />
       )}

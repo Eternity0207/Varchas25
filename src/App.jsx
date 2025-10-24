@@ -1,23 +1,36 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/home";
 import Gallery from "./pages/gallery";
 import Events from "./pages/events";
 import Team from "./pages/team";
-import "./index.css";
 import Navbar from "./components/Navbar";
+import useSessionStorage from "./hooks/useSessionStorage";
+import "./index.css";
 
-function App() {
+function AppContent({ showNavbar, setShowNavbar }) {
+  const location = useLocation();
+
   return (
-    
-    <Router>
-      <Navbar />
+    <>
+      {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home setShowNavbar={setShowNavbar} />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/events" element={<Events />} />
         <Route path="/team" element={<Team />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  const [hasLoaded] = useSessionStorage("hasLoaded", false);
+  const [showNavbar, setShowNavbar] = useState(hasLoaded);
+
+  return (
+    <Router>
+      <AppContent showNavbar={showNavbar} setShowNavbar={setShowNavbar} />
     </Router>
   );
 }

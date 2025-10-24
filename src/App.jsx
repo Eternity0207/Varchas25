@@ -6,6 +6,7 @@ import Events from "./pages/events";
 import Team from "./pages/team";
 import Navbar from "./components/Navbar";
 import useSessionStorage from "./hooks/useSessionStorage";
+import Discount from "./pages/discount";
 import "./index.css";
 
 function AppContent({ showNavbar, setShowNavbar }) {
@@ -19,6 +20,7 @@ function AppContent({ showNavbar, setShowNavbar }) {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/events" element={<Events />} />
         <Route path="/team" element={<Team />} />
+        <Route path="/discount" element={<Discount />} />
       </Routes>
     </>
   );

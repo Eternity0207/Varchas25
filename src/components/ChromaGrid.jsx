@@ -111,20 +111,20 @@ export const ChromaGrid = ({
             <h3 className="name">{c.title}</h3>
             <p className="subtitle">{c.subtitle}</p>
             <p className="description">{c.description}</p>
-            <div className="button-group">
+            {/* <div className="button-group">
               <button 
                 className="rule-book-btn"
                 onClick={(e) => handleRuleBookClick(c.ruleBookUrl, e)}
               >
                 Rule Book
               </button>
-              <button 
+              <button
                 className="register-btn"
                 onClick={(e) => handleRegisterClick(c.registerUrl, e)}
               >
                 Register
               </button>
-            </div>
+            </div> */}
           </footer>
         </article>
       ))}

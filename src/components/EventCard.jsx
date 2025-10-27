@@ -179,7 +179,7 @@ const EventCardComponent = ({
         <div className="ec-inside">
           <div className="ec-shine" />
           <div className="ec-glare" />
-          
+
           <div className="ec-image-container">
             <img src={imageUrl} alt={eventName} className="ec-event-image" />
             <div className="ec-overlay" />
@@ -193,7 +193,11 @@ const EventCardComponent = ({
             </div>
 
             <div className="ec-buttons">
-              <a href={registerLink} className="ec-btn ec-btn-register">
+              <a
+                href={registerLink}
+                className="ec-btn ec-btn-register disabled"
+                onClick={e => e.preventDefault()}
+              >
                 Register
               </a>
               <a href={rulebookLink} target='_blank' className="ec-btn ec-btn-rulebook">

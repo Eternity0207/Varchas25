@@ -91,12 +91,10 @@
 }
 
 .ec-shine {
-  background: linear-gradient(
-    115deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 70%
-  );
+  background: linear-gradient(115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 70%);
   opacity: 0;
 }
 
@@ -110,17 +108,16 @@
   0% {
     transform: translateX(-100%) translateY(-100%) rotate(45deg);
   }
+
   100% {
     transform: translateX(100%) translateY(100%) rotate(45deg);
   }
 }
 
 .ec-glare {
-  background: radial-gradient(
-    farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    rgba(255, 255, 255, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 70%);
 }
 
 .ec-card-wrapper:hover .ec-glare,
@@ -314,4 +311,10 @@
   .ec-description {
     font-size: 0.85rem;
   }
-} 
+}
+
+.ec-btn.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}

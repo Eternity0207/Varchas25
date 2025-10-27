@@ -932,9 +932,7 @@ class InfiniteGridMenu {
 const defaultItems = [
   {
     image: 'https://picsum.photos/900/900?grayscale',
-    link: 'https://google.com/',
-    title: '',
-    description: ''
+    link: 'https://google.com/'
   }
 ];
 
@@ -984,14 +982,6 @@ export default function InfiniteMenu({ items = [] }) {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
-
-      {activeItem && (
-        <>
-          <h2 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h2>
-
-          <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}> {activeItem.description}</p>
-        </>
-      )}
     </div>
   );
 }

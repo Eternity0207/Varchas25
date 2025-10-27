@@ -4,39 +4,27 @@ import InfiniteMenu from '../components/InfiniteMenu'
 const items = [
   {
     image: '/images/image1.jpg',
-    link: 'https://google.com/',
-    title: 'Varchas 2025',
-    description: 'Capturing the spirit of excellence'
+    link: 'https://google.com/'
   },
   {
     image: '/images/image2.jpg',
-    link: 'https://google.com/',
-    title: 'Athletic Excellence',
-    description: 'Where champions compete'
+    link: 'https://google.com/'
   },
   {
     image: '/images/image3.jpg',
-    link: 'https://google.com/',
-    title: 'Victory Moments',
-    description: 'Celebrating triumph and glory'
+    link: 'https://google.com/'
   },
   {
     image: '/images/image4.jpg',
-    link: 'https://google.com/',
-    title: 'Sportsmanship',
-    description: 'Uniting athletes from across the nation'
+    link: 'https://google.com/'
   },
   {
     image: '/images/image5.jpg',
-    link: 'https://google.com/',
-    title: 'Competition Arena',
-    description: 'Where legends are born'
+    link: 'https://google.com/'
   },
   {
     image: '/images/image6.jpg',
-    link: 'https://google.com/',
-    title: 'Varchas Legacy',
-    description: 'Continuing the tradition of excellence'
+    link: 'https://google.com/'
   }
 ];
 

@@ -17,70 +17,7 @@ export const ChromaGrid = ({
   const setX = useRef(null);
   const setY = useRef(null);
   const pos = useRef({ x: 0, y: 0 });
-
-  const demo = [
-    {
-      image: '/images/image1.jpg',
-      title: 'Cricket',
-      subtitle: 'The Gentleman\'s Game',
-      description: 'Experience the thrill of cricket with our competitive tournament featuring teams from across the nation.',
-      borderColor: '#4F46E5',
-      gradient: 'linear-gradient(145deg, #4F46E5, #000)',
-      ruleBookUrl: '/rules/cricket.pdf',
-      registerUrl: '/register/cricket'
-    },
-    {
-      image: '/images/image2.jpg',
-      title: 'Football',
-      subtitle: 'The Beautiful Game',
-      description: 'Join the most exciting football tournament with professional referees and amazing prizes.',
-      borderColor: '#10B981',
-      gradient: 'linear-gradient(210deg, #10B981, #000)',
-      ruleBookUrl: '/rules/football.pdf',
-      registerUrl: '/register/football'
-    },
-    {
-      image: '/images/image3.jpg',
-      title: 'Basketball',
-      subtitle: 'Fast-Paced Action',
-      description: 'Dunk your way to victory in our high-energy basketball championship.',
-      borderColor: '#F59E0B',
-      gradient: 'linear-gradient(165deg, #F59E0B, #000)',
-      ruleBookUrl: '/rules/basketball.pdf',
-      registerUrl: '/register/basketball'
-    },
-    {
-      image: '/images/image4.jpg',
-      title: 'Badminton',
-      subtitle: 'Precision & Speed',
-      description: 'Showcase your badminton skills in singles and doubles categories.',
-      borderColor: '#EF4444',
-      gradient: 'linear-gradient(195deg, #EF4444, #000)',
-      ruleBookUrl: '/rules/badminton.pdf',
-      registerUrl: '/register/badminton'
-    },
-    {
-      image: '/images/image5.jpg',
-      title: 'Table Tennis',
-      subtitle: 'Lightning Fast',
-      description: 'Quick reflexes and precision shots in our table tennis championship.',
-      borderColor: '#8B5CF6',
-      gradient: 'linear-gradient(225deg, #8B5CF6, #000)',
-      ruleBookUrl: '/rules/table-tennis.pdf',
-      registerUrl: '/register/table-tennis'
-    },
-    {
-      image: '/images/image6.jpg',
-      title: 'Athletics',
-      subtitle: 'Track & Field',
-      description: 'Sprint, jump, and throw your way to glory in various track and field events.',
-      borderColor: '#06B6D4',
-      gradient: 'linear-gradient(135deg, #06B6D4, #000)',
-      ruleBookUrl: '/rules/athletics.pdf',
-      registerUrl: '/register/athletics'
-    }
-  ];
-  const data = items?.length ? items : demo;
+  const data = items;
 
   useEffect(() => {
     const el = rootRef.current;

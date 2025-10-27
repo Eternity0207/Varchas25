@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
+import EventCard from "../components/EventCard";
 import "../styles/events.css";
 
 const Events = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
   const events = [
     {
       id: 1,
@@ -115,61 +113,18 @@ const Events = () => {
         {events.map((event, index) => (
           <motion.div
             key={event.id}
-            className="event-card"
             variants={itemVariants}
-            onHoverStart={() => setHoveredIndex(index)}
-            onHoverEnd={() => setHoveredIndex(null)}
-            whileHover={{ y: -10 }}
-            transition={{ duration: 0.3 }}
+            style={{ height: "100%" }}
           >
-            <div className="event-image-container">
-              <img src={event.image} alt={event.name} />
-              <div className="event-overlay" />
-              <motion.div
-                className="event-number"
-                initial={{ scale: 0, rotate: -180 }}
-                whileHover={{ scale: 1.2, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 200 }}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </motion.div>
-            </div>
-
-            <div className="event-content">
-              <motion.h3
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 + index * 0.1 }}
-              >
-                {event.name}
-              </motion.h3>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-              >
-                {event.description}
-              </motion.p>
-
-              <div className="event-buttons">
-                <motion.a
-                  href={event.registerLink}
-                  className="btn btn-register"
-                  whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(255, 255, 255, 0.2)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Register
-                </motion.a>
-                <motion.a
-                  href={event.rulebookLink}
-                  className="btn btn-rulebook"
-                  whileHover={{ scale: 1.05, boxShadow: "0 8px 20px rgba(255, 255, 255, 0.2)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Rule Book
-                </motion.a>
-              </div>
-            </div>
+            <EventCard
+              imageUrl={event.image}
+              eventName={event.name}
+              description={event.description}
+              eventNumber={index + 1}
+              registerLink={event.registerLink}
+              rulebookLink={event.rulebookLink}
+              enableTilt={true}
+            />
           </motion.div>
         ))}
       </motion.div>

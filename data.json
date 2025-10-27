@@ -20,7 +20,7 @@
     "registerUrl": "https://instagram.com/jatin_purbia"
   },
   {
-    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593949/WhatsApp_Image_2025-10-28_at_01.08.19_8983ed67_erbvjx.jpg",
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593515/8d3341dd-6607-4ef8-81d8-7f5bd6db61f1_zql5w8.jpg",
     "title": "Rudra Gupta",
     "subtitle": "Festival chief",
     "description": "@imrudra08 — Oversees all fest operations and management",
@@ -38,6 +38,16 @@
     "gradient": "linear-gradient(145deg, #10B981, #000)",
     "ruleBookUrl": "/logo.png",
     "registerUrl": "https://www.linkedin.com/in/om-chandra-sharma"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593949/WhatsApp_Image_2025-10-28_at_01.08.19_8983ed67_erbvjx.jpg",
+    "title": "Sudhanshu Tamhankar",
+    "subtitle": "Ex-Officio",
+    "description": "@sudhanshutamhankar — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/sudhanshutamhankar"
   },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593691/WhatsApp_Image_2025-10-28_at_01.04.22_0a13453b_ay0ovs.jpg",

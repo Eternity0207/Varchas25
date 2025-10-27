@@ -287,3 +287,136 @@
     padding: 0.8rem 1rem;
   }
 }
+
+.discount-page {
+  position: relative;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  color: #fff;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.discount-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.discount-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.offer-card {
+  background: rgba(20, 20, 20, 0.9);
+  border: 2px solid #d4af37;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  transition: all 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+}
+
+.offer-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.offer-title {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.offer-badge {
+  background: linear-gradient(90deg, #d4af37, #b78f28);
+  color: #000;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.offer-highlight h3 {
+  color: #d4af37;
+  font-size: 1.4rem;
+}
+
+.highlight-text {
+  color: #ccc;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.gold-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.gold-table th,
+.gold-table td {
+  border: 1px solid #d4af37;
+  padding: 0.8rem;
+}
+
+.gold-table th {
+  background: rgba(212, 175, 55, 0.2);
+  font-weight: 600;
+}
+
+.gold-table tr:hover {
+  background: rgba(212, 175, 55, 0.1);
+  transition: background 0.3s ease;
+}
+
+.conditions {
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.conditions h4 {
+  color: #d4af37;
+  margin-bottom: 0.6rem;
+}
+
+.conditions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.conditions li {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.conditions li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #d4af37;
+}
+
+.conditions .warning {
+  color: #ff6b6b;
+  font-weight: 600;
+}

@@ -20,55 +20,59 @@ const Discount = () => {
       
       <div className="discount-content">
         <div className="discount-container">
-          <h1 className="discount-title">Special Offers</h1>
+          <h1 className="discount-title">Accommodation Discounts</h1>
           
-          <div className="offer-card contingent-leader">
+          <div className="offer-card accommodation-offer">
             <div className="offer-header">
-              <h2 className="offer-title">Contingent Leader</h2>
-              <div className="offer-badge">FREE</div>
+              <h2 className="offer-title">Group Accommodation Offer</h2>
+              <div className="offer-badge">Bigger Groups, Bigger Savings!</div>
             </div>
-            
-            <div className="offer-content">
-              <div className="offer-highlight">
-                <h3>Win FREE ACCOMMODATION at IIT Jodhpur</h3>
-                <p className="highlight-text">+ JODHPUR CITY TOUR</p>
-              </div>
-              
-              <div className="requirements">
-                <h4>Requirements:</h4>
-                <ul>
-                  <li>Bring <span className="highlight">15 registrations</span> to Varchas'24 website</li>
-                  <li>Bring <span className="highlight">15 accommodations</span> to Varchas'24 Sports fest</li>
-                  <li>Register at least <span className="highlight">20 students</span> along with accommodation</li>
-                </ul>
-              </div>
-              
-              <div className="deliverables">
-                <h4>Deliverables:</h4>
-                <div className="deliverables-list">
-                  <div className="deliverable-item">
-                    <span className="deliverable-text">FREE Accommodation</span>
-                  </div>
-                  <div className="deliverable-item">
-                    <span className="deliverable-text">Food</span>
-                  </div>
-                  <div className="deliverable-item">
-                    <span className="deliverable-text">Pronite Passes</span>
-                  </div>
-                  <div className="deliverable-item">
-                    <span className="deliverable-text">Jodhpur City TOUR</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="conditions">
-                <h4>Important Conditions:</h4>
-                <ul>
-                  <li>Contingent leader and registrations must be students (UG/PG) of a registered College/University</li>
-                  <li>All participants must provide legal documents and valid student ID proof</li>
-                  <li className="warning">⚠️ Fine of Rs.12,000 if any participant fails to provide required documents</li>
-                </ul>
-              </div>
+
+            <div className="offer-highlight">
+              <h3>Save More When You Stay Together!</h3>
+              <p className="highlight-text">
+                Register your contingent and enjoy exclusive accommodation discounts at IIT Jodhpur.
+              </p>
+            </div>
+
+            <div className="pricing-table">
+              <h4>Charges per Person</h4>
+              <table className="gold-table">
+                <thead>
+                  <tr>
+                    <th>Number of People</th>
+                    <th>Charges (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Below 40</td>
+                    <td>2200</td>
+                  </tr>
+                  <tr>
+                    <td>40+</td>
+                    <td>2150</td>
+                  </tr>
+                  <tr>
+                    <td>60+</td>
+                    <td>2100</td>
+                  </tr>
+                  <tr>
+                    <td>80+</td>
+                    <td>2000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="conditions">
+              <h4>Important Notes</h4>
+              <ul>
+                <li>Offers apply only to registered participants with accommodation at IIT Jodhpur.</li>
+                <li>All participants must present valid student ID proof during check-in.</li>
+                <li>Discounts apply automatically based on group size at registration.</li>
+                <li className="warning">⚠️ Charges are non-refundable once accommodation is confirmed.</li>
+              </ul>
             </div>
           </div>
         </div>

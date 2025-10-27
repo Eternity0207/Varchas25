@@ -196,7 +196,7 @@ const EventCardComponent = ({
               <a href={registerLink} className="ec-btn ec-btn-register">
                 Register
               </a>
-              <a href={rulebookLink} className="ec-btn ec-btn-rulebook">
+              <a href={rulebookLink} target='_blank' className="ec-btn ec-btn-rulebook">
                 Rule Book
               </a>
             </div>

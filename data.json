@@ -1,8 +1,58 @@
 [
   {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593354/IMG-20241202-WA0056_xfjnqs.jpg",
+    "title": "Krish Teckchandani",
+    "subtitle": "Festival chief (Finance)",
+    "description": "@krish2005tech — Manages all fest budget and cost management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/krish2005tech"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593247/20250503_174835_wmcmp3.jpg",
+    "title": "Jatin Purbia",
+    "subtitle": "Festival chief",
+    "description": "@jatin_purbia — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/jatin_purbia"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593949/WhatsApp_Image_2025-10-28_at_01.08.19_8983ed67_erbvjx.jpg",
+    "title": "Rudra Gupta",
+    "subtitle": "Festival chief",
+    "description": "@imrudra08 — Oversees all fest operations and management",
+    "borderColor": "#10B981",
+    "gradient": "linear-gradient(210deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/imrudra08"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412420/Team/1bA-HONhP8JWonrPg11NbTpbtSUhWt4a6.jpg",
+    "title": "Om Chandra Sharma",
+    "subtitle": "Festival chief",
+    "description": "Om Chandra Sharma — Oversees all fest operations and management",
+    "borderColor": "#E11D48",
+    "gradient": "linear-gradient(145deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://www.linkedin.com/in/om-chandra-sharma"
+  },
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761593691/WhatsApp_Image_2025-10-28_at_01.04.22_0a13453b_ay0ovs.jpg",
+    "title": "Aaditya Sharma",
+    "subtitle": "Web Development",
+    "description": "@aaditya___1210 — Handles all web development and related technical work for the fest",
+    "borderColor": "#E11D48",
+    "gradient": "linear-gradient(145deg, #10B981, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://www.instagram.com/in/aaditya___1210"
+  },
+  {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412401/Team/1qPw0F7aSp4pdOUt9MefB6SmCmhVJWH0u.jpg",
     "title": "Nitin koronde",
-    "subtitle": "Accommodation",
+    "subtitle": "ATS",
     "description": "@Nitin_koronde — Handles Accommodation queries",
     "borderColor": "#10B981",
     "gradient": "linear-gradient(210deg, #10B981, #000)",
@@ -12,7 +62,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412445/Team/1Pp0YUHpY2QOH2ql0gOj0JO8tECcW0UD4.jpg",
     "title": "Piyush kumar",
-    "subtitle": "Accomodation (ATS)",
+    "subtitle": "ATS",
     "description": "@piyushk2303 — Accommodation & ATS",
     "borderColor": "#FB923C",
     "gradient": "linear-gradient(180deg, #FB923C, #000)",
@@ -30,9 +80,19 @@
     "registerUrl": "https://instagram.com/satyaprakash6291"
   },
   {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412425/Team/17tI3HL7SIfDJdW1HnWTXvF1bL61eudc_.jpg",
+    "title": "Yashaswini Tirupathi",
+    "subtitle": "ATS",
+    "description": "@_ms.serenity_ — ATS",
+    "borderColor": "#A78BFA",
+    "gradient": "linear-gradient(185deg, #A78BFA, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/_ms.serenity_"
+  },
+  {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412454/Team/1xJtyNwFVdexybWzVfOjiXfTCsz7VZNV5.jpg",
     "title": "Jilukara Supriya",
-    "subtitle": "ATS(Accommodation)",
+    "subtitle": "ATS",
     "description": "@Supriya__2666 — ATS & Accommodation",
     "borderColor": "#84CC16",
     "gradient": "linear-gradient(160deg, #84CC16, #000)",
@@ -42,7 +102,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412451/Team/15aTWeL4DiX2FTBRrryyDyz5Nfzc-LBMz.jpg",
     "title": "TUSHAR NAGARGOJE",
-    "subtitle": "Sports(Basketball)",
+    "subtitle": "Sports",
     "description": "@_tushar_nagargoje — Basketball Coordination",
     "borderColor": "#F59E0B",
     "gradient": "linear-gradient(165deg, #F59E0B, #000)",
@@ -60,14 +120,25 @@
     "registerUrl": "https://instagram.com/saumitra"
   },
   {
-    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412420/Team/1bA-HONhP8JWonrPg11NbTpbtSUhWt4a6.jpg",
-    "title": "Om Chandra Sharma",
-    "subtitle": "Festival chief",
-    "description": "Om Chandra Sharma — Oversees all fest operations and management",
-    "borderColor": "#E11D48",
-    "gradient": "linear-gradient(145deg, #E11D48, #000)",
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761594035/WhatsApp_Image_2025-10-28_at_01.10.00_9d76278f_oeqo5s.jpg",
+    "title": "Mahi Upadhyay",
+    "subtitle": "Design and Creativity",
+    "description": "@mahiupadhyaay — Contact for Design & Creative Works",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(145deg, #4F46E5, #000)",
     "ruleBookUrl": "/logo.png",
-    "registerUrl": "https://www.linkedin.com/in/om-chandra-sharma"
+    "registerUrl": "https://instagram.com/mahiupadhyaay"
+  },
+  
+  {
+    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761594270/WhatsApp_Image_2025-10-28_at_01.10.01_1c305218_extxfx.jpg",
+    "title": "Pragati Rokade",
+    "subtitle": "Design and Creativity",
+    "description": "@pragati.r_ — Contact for Design & Creative Works",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(145deg, #4F46E5, #000)",
+    "ruleBookUrl": "/logo.png",
+    "registerUrl": "https://instagram.com/pragati.r_"
   },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412464/Team/1Jjq6lXK0sif4Vo1rxCxgH76imMcfLROs.jpg",
@@ -242,7 +313,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412470/Team/1FCjPX8yD6TY2wJcb87Vza_bqqVqM1_0M.jpg",
     "title": "Vihan Karnik",
-    "subtitle": "Sports Events",
+    "subtitle": "Sports",
     "description": "@vihahahahahan — Sports Event Management",
     "borderColor": "#3B82F6",
     "gradient": "linear-gradient(195deg, #3B82F6, #000)",
@@ -252,7 +323,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412466/Team/1_R7pZPXc_5FBgXRl96Fi2R8enfUhNNqW.jpg",
     "title": "Nikhil yadav",
-    "subtitle": "Sports events",
+    "subtitle": "Sports",
     "description": "@nikhilyadav8714 — Sports Events",
     "borderColor": "#F97316",
     "gradient": "linear-gradient(200deg, #F97316, #000)",
@@ -262,7 +333,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412422/Team/1ubFuf-3_IPyOgZ0mrPAVqM3QS7XPXON1.jpg",
     "title": "Kuldeep",
-    "subtitle": "Sports event (volleyball)",
+    "subtitle": "Sports",
     "description": "@alive__kuldeep — Volleyball Event Management",
     "borderColor": "#67E8F9",
     "gradient": "linear-gradient(165deg, #67E8F9, #000)",
@@ -292,7 +363,7 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412391/Team/18XyurO_le-pXSxhriq9_jA91OfBNKk49.jpg",
     "title": "Mayank Dahiya",
-    "subtitle": "Sports(Esports, Chess)",
+    "subtitle": "Sports",
     "description": "@m_dahiya471 — Manages Esports and Chess",
     "borderColor": "#EF4444",
     "gradient": "linear-gradient(195deg, #EF4444, #000)",
@@ -302,22 +373,12 @@
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412461/Team/18HnD7KA1En3pXZdQEJUMFIEbG_e7XVWn.jpg",
     "title": "Yaddanapudi Gnani Prakash",
-    "subtitle": "Power lifting, Table tennis",
+    "subtitle": "Sports",
     "description": "@tonyyy__ig — Manages Strength & TT Events",
     "borderColor": "#0D9488",
     "gradient": "linear-gradient(175deg, #0D9488, #000)",
     "ruleBookUrl": "/logo.png",
     "registerUrl": "https://instagram.com/tonyyy__ig"
-  },
-  {
-    "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412425/Team/17tI3HL7SIfDJdW1HnWTXvF1bL61eudc_.jpg",
-    "title": "Yashaswini Tirupathi",
-    "subtitle": "ATS",
-    "description": "@_ms.serenity_ — ATS",
-    "borderColor": "#A78BFA",
-    "gradient": "linear-gradient(185deg, #A78BFA, #000)",
-    "ruleBookUrl": "/logo.png",
-    "registerUrl": "https://instagram.com/_ms.serenity_"
   },
   {
     "image": "https://res.cloudinary.com/dvz8vitos/image/upload/v1761412384/Team/1cI_VgNUOQg_qxvsBHiIRSpn-oiw9CBmj.jpg",

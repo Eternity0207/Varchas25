@@ -717,7 +717,29 @@ class InfiniteGridMenu {
       images.forEach((img, i) => {
         const x = (i % this.atlasSize) * cellSize;
         const y = Math.floor(i / this.atlasSize) * cellSize;
-        ctx.drawImage(img, x, y, cellSize, cellSize);
+        
+        // Calculate aspect ratio preserving dimensions
+        const imgAspect = img.width / img.height;
+        const targetAspect = 1; // Square cell
+        let drawWidth, drawHeight, offsetX, offsetY;
+        
+        if (imgAspect > targetAspect) {
+          // Image is wider than tall
+          drawWidth = cellSize;
+          drawHeight = cellSize / imgAspect;
+          offsetX = 0;
+          offsetY = (cellSize - drawHeight) / 2;
+        } else {
+          // Image is taller than wide
+          drawWidth = cellSize * imgAspect;
+          drawHeight = cellSize;
+          offsetX = (cellSize - drawWidth) / 2;
+          offsetY = 0;
+        }
+        
+        ctx.fillStyle = '#000';
+        ctx.fillRect(x, y, cellSize, cellSize);
+        ctx.drawImage(img, x + offsetX, y + offsetY, drawWidth, drawHeight);
       });
 
       gl.bindTexture(gl.TEXTURE_2D, this.tex);

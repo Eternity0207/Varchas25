@@ -3,28 +3,40 @@ import InfiniteMenu from '../components/InfiniteMenu'
 
 const items = [
   {
-    image: 'https://picsum.photos/300/300?red',
+    image: '/images/image1.jpg',
     link: 'https://google.com/',
-    title: 'Item 1',
-    description: 'This is pretty cool, right?'
+    title: 'Varchas 2025',
+    description: 'Capturing the spirit of excellence'
   },
   {
-    image: 'https://picsum.photos/400/400?red',
+    image: '/images/image2.jpg',
     link: 'https://google.com/',
-    title: 'Item 2',
-    description: 'This is pretty cool, right?'
+    title: 'Athletic Excellence',
+    description: 'Where champions compete'
   },
   {
-    image: 'https://picsum.photos/500/500?red',
+    image: '/images/image3.jpg',
     link: 'https://google.com/',
-    title: 'Item 3',
-    description: 'This is pretty cool, right?'
+    title: 'Victory Moments',
+    description: 'Celebrating triumph and glory'
   },
   {
-    image: 'https://picsum.photos/600/600?red',
+    image: '/images/image4.jpg',
     link: 'https://google.com/',
-    title: 'Item 4',
-    description: 'This is pretty cool, right?'
+    title: 'Sportsmanship',
+    description: 'Uniting athletes from across the nation'
+  },
+  {
+    image: '/images/image5.jpg',
+    link: 'https://google.com/',
+    title: 'Competition Arena',
+    description: 'Where legends are born'
+  },
+  {
+    image: '/images/image6.jpg',
+    link: 'https://google.com/',
+    title: 'Varchas Legacy',
+    description: 'Continuing the tradition of excellence'
   }
 ];
 

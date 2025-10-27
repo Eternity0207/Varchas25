@@ -52,9 +52,7 @@
 }
 
 .ec-card {
-  height: auto;
-  min-height: 450px;
-  max-height: 550px;
+  height: 550px;
   display: grid;
   border-radius: var(--card-radius);
   position: relative;
@@ -271,8 +269,7 @@
 
 @media (max-width: 768px) {
   .ec-card {
-    min-height: 400px;
-    max-height: 450px;
+    height: 450px;
   }
 
   .ec-image-container {
@@ -298,7 +295,7 @@
 
 @media (max-width: 480px) {
   .ec-card {
-    min-height: 380px;
+    height: 420px;
   }
 
   .ec-image-container {

@@ -249,9 +249,9 @@ function Home({ setShowNavbar }) {
 
   useEffect(() => {
     if (!hasLoaded && !showCanvas) {
-      document.body.style.overflowY = "hidden";
+      document.documentElement.style.overflowY = "hidden";
     } else {
-      document.body.style.overflowY = "auto";
+      document.documentElement.style.overflowY = "auto";
     }
   }, [hasLoaded, showCanvas]);
 

@@ -25,6 +25,62 @@ const items = [
   {
     image: '/images/image6.jpg',
     link: 'https://google.com/'
+  },
+  {
+    image: '/images/image7.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image8.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image9.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image10.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image11.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image12.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image13.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image14.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image15.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image16.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image17.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image18.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image19.jpg',
+    link: 'https://google.com/'
+  },
+  {
+    image: '/images/image20.jpg',
+    link: 'https://google.com/'
   }
 ];
 

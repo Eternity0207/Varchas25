@@ -715,33 +715,14 @@ class InfiniteGridMenu {
       )
     ).then(images => {
       images.forEach((img, i) => {
-        const x = (i % this.atlasSize) * cellSize;
-        const y = Math.floor(i / this.atlasSize) * cellSize;
-        
-        // Calculate aspect ratio preserving dimensions
-        const imgAspect = img.width / img.height;
-        const targetAspect = 1; // Square cell
-        let drawWidth, drawHeight, offsetX, offsetY;
-        
-        if (imgAspect > targetAspect) {
-          // Image is wider than tall
-          drawWidth = cellSize;
-          drawHeight = cellSize / imgAspect;
-          offsetX = 0;
-          offsetY = (cellSize - drawHeight) / 2;
-        } else {
-          // Image is taller than wide
-          drawWidth = cellSize * imgAspect;
-          drawHeight = cellSize;
-          offsetX = (cellSize - drawWidth) / 2;
-          offsetY = 0;
-        }
-        
-        ctx.fillStyle = '#000';
-        ctx.fillRect(x, y, cellSize, cellSize);
-        ctx.drawImage(img, x + offsetX, y + offsetY, drawWidth, drawHeight);
-      });
+        const sSize = Math.min(img.width, img.height);
 
+        const sx = (img.width - sSize) / 2;
+        const sy = (img.height - sSize) / 2;
+        const dx = (i % this.atlasSize) * cellSize;
+        const dy = Math.floor(i / this.atlasSize) * cellSize;
+        ctx.drawImage(img, sx, sy, sSize, sSize, dx, dy, cellSize, cellSize);
+      });
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
       gl.generateMipmap(gl.TEXTURE_2D);
@@ -852,7 +833,6 @@ class InfiniteGridMenu {
     mat4.invert(this.camera.matrices.view, this.camera.matrix);
   }
 
-  // In the InfiniteGridMenu class...
 
   #updateProjectionMatrix(gl) {
     this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;

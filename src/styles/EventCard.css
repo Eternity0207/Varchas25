@@ -22,7 +22,7 @@
   perspective: 500px;
   transform: translate3d(0, 0, 0.1px);
   position: relative;
-  touch-action: none;
+  touch-action: pan-y; /* allow vertical scroll */
 }
 
 .ec-card-wrapper::before {
@@ -79,6 +79,7 @@
   grid-template-rows: auto 1fr;
   gap: 0;
   overflow: hidden;
+  min-height: 0;
 }
 
 .ec-shine,
@@ -141,8 +142,21 @@
   border-radius: 20px 20px 0 0;
 }
 
-.ec-card:hover .ec-event-image {
-  transform: scale(1.1);
+.ec-card:hover .ec-event-image,
+.ec-card.active .ec-event-image {
+  transform: translateY(-10px) scale(1.05);
+}
+
+/* layered lift */
+.ec-card:hover .ec-content,
+.ec-card.active .ec-content {
+  transform: translateY(-6px);
+  transition: transform 0.4s ease;
+}
+
+.ec-card:hover .ec-event-number,
+.ec-card.active .ec-event-number {
+  transform: translateY(-8px) scale(1.05) rotate(3deg);
 }
 
 .ec-overlay {
@@ -192,12 +206,14 @@
   display: grid;
   grid-template-rows: 1fr auto;
   gap: 20px;
+  min-height: 0;
 }
 
 .ec-details {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 0;
 }
 
 .ec-event-name {
@@ -216,6 +232,9 @@
   color: #aaa;
   line-height: 1.6;
   margin: 0;
+  overflow: auto;
+  max-height: 8.5rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ec-buttons {
@@ -266,15 +285,19 @@
 
 @media (max-width: 768px) {
   .ec-card {
-    height: 450px;
+    height: 400px;
   }
 
   .ec-image-container {
-    height: 220px;
+    height: 190px;
   }
 
   .ec-content {
     padding: 24px;
+  }
+
+  .ec-description {
+    max-height: 6.8rem;
   }
 
   .ec-buttons {
@@ -292,11 +315,11 @@
 
 @media (max-width: 480px) {
   .ec-card {
-    height: 420px;
+    height: 360px;
   }
 
   .ec-image-container {
-    height: 200px;
+    height: 170px;
   }
 
   .ec-content {
@@ -310,6 +333,7 @@
 
   .ec-description {
     font-size: 0.85rem;
+    max-height: 6rem;
   }
 }
 

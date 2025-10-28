@@ -40,7 +40,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 40px;
+  gap: 48px; /* more space between cards */
   padding: 0 20px;
 }
 
@@ -212,7 +212,7 @@
 
   .events-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 36px; /* more vertical spacing for touch */
     padding: 0;
   }
 

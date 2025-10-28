@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import '../styles/EventCard.css';
 
 const DEFAULT_BEHIND_GRADIENT =
@@ -32,9 +32,21 @@ const EventCardComponent = ({
 }) => {
   const wrapRef = useRef(null);
   const cardRef = useRef(null);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    try {
+      const mq = window.matchMedia('(pointer: coarse)');
+      setIsCoarsePointer(mq.matches);
+    } catch (_) {
+      setIsCoarsePointer(false);
+    }
+  }, []);
+
+  const tiltEnabled = useMemo(() => enableTilt && !isCoarsePointer, [enableTilt, isCoarsePointer]);
 
   const animationHandlers = useMemo(() => {
-    if (!enableTilt) return null;
+    if (!tiltEnabled) return null;
 
     let rafId = null;
 
@@ -98,7 +110,7 @@ const EventCardComponent = ({
         }
       }
     };
-  }, [enableTilt]);
+  }, [tiltEnabled]);
 
   const handlePointerMove = useCallback(
     event => {
@@ -142,7 +154,7 @@ const EventCardComponent = ({
   );
 
   useEffect(() => {
-    if (!enableTilt || !animationHandlers) return;
+    if (!tiltEnabled || !animationHandlers) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -164,7 +176,7 @@ const EventCardComponent = ({
       card.removeEventListener('pointerleave', handlePointerLeave);
       animationHandlers.cancelAnimation();
     };
-  }, [enableTilt, animationHandlers, handlePointerMove, handlePointerEnter, handlePointerLeave]);
+  }, [tiltEnabled, animationHandlers, handlePointerMove, handlePointerEnter, handlePointerLeave]);
 
   const cardStyle = useMemo(
     () => ({
